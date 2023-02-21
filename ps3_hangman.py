@@ -162,7 +162,7 @@ def hangman(secretWord):
             continue
         # Add the valid guess to the lettersGuessed list
         lettersGuessed.append(user_guess_lowercase)
-
+        # Check if the guess is correct
         if user_guess_lowercase in secretWord:
           print("Good guess: " + getGuessedWord(secretWord,lettersGuessed) + "\n" + "-------------")
         else:
