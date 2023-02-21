@@ -203,11 +203,3 @@ def hangman(secretWord):
 
 
 hangman(secretWord)
-
-
-x = "A"
-
-
-def test():
-    """_summary_
-    """
