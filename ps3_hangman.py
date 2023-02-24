@@ -23,13 +23,10 @@ def loadWords():
 
 
 def chooseWord(wordlist):
-    """AI is creating summary for chooseWord
+    """
+    wordlist (list): list of words (strings)
 
-    Args:
-        wordlist ([type]): [description]
-
-    Returns:
-        [type]: [description]
+    Returns a word from wordlist at random
     """
     return random.choice(wordlist)
 
