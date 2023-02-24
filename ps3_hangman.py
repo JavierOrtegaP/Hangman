@@ -11,9 +11,10 @@ def loadWords():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
+
     print("Loading word list from file...")
     # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r')
+    inFile = open(WORDLIST_FILENAME, "r")
     # line: string
     line = inFile.readline()
     # wordlist: list of strings
@@ -30,6 +31,7 @@ def chooseWord(wordlist):
     """
     return random.choice(wordlist)
 
+
 # end of helper code
 # -----------------------------------
 
@@ -43,7 +45,7 @@ secretWord = chooseWord(wordlist)
 
 
 def isWordGuessed(secretWord, lettersGuessed):
-    '''
+    """
     secretWord: string, the word the user is guessing
     lettersGuessed: list, what letters have been guessed so far
     returns: boolean, True if all the letters of secretWord are
@@ -54,7 +56,7 @@ def isWordGuessed(secretWord, lettersGuessed):
     >>> lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
     >>> print(isWordGuessed(secretWord, lettersGuessed))
     False
-    '''
+    """
     # Returns False if the list of lettersGuessed is empty
     if lettersGuessed == []:
         return False
@@ -67,7 +69,7 @@ def isWordGuessed(secretWord, lettersGuessed):
 
 
 def getGuessedWord(secretWord, lettersGuessed):
-    '''
+    """
     secretWord: string, the word the user is guessing
     lettersGuessed: list, what letters have been guessed so far
     returns: string, comprised of letters and underscores that represents
@@ -77,7 +79,7 @@ def getGuessedWord(secretWord, lettersGuessed):
     >>> lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
     >>> print(getGuessedWord(secretWord, lettersGuessed))
     '_ pp_ e'
-    '''
+    """
     # Assigns an empty string to guessed_
     guessed_word = ""
     # Checks each letter of secretWord; if the letter is included, add it to
@@ -91,29 +93,30 @@ def getGuessedWord(secretWord, lettersGuessed):
 
 
 def getAvailableLetters(lettersGuessed):
-    '''
+    """
     lettersGuessed: list, what letters have been guessed so far
     returns: string, comprised of letters that represents what
     letters have not yet been guessed.
     >>> lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
     >>> print(getAvailableLetters(lettersGuessed))
     abcdfghjlmnoqtuvwxyz
-    '''
+    """
     # Assigns an empty string to guessed_
     available_letters = ""
     # Imports a list of lowercase letters
     from string import ascii_lowercase
+
     # Checks each letter of the alphabet; if the letter is included in
     # lettersGuessed, add it to available_letters. If it's not,
     # don't add anything
     for letter in ascii_lowercase:
         if letter not in lettersGuessed:
             available_letters += letter
-    return (available_letters)
+    return available_letters
 
 
 def hangman(secretWord):
-    '''
+    """
     secretWord: string, the secret word to guess.
 
     Starts up an interactive game of Hangman.
@@ -131,10 +134,16 @@ def hangman(secretWord):
       user has not yet guessed.
 
     Follows the other limitations detailed in the problem write-up.
-    '''
-    print("Welcome to the game Hangman!" + "\n" +
-          "I am thinking of a word that is " +
-          str(len(secretWord)) + " letters long." + "\n" + "-------------")
+    """
+    print(
+        "Welcome to the game Hangman!"
+        + "\n"
+        + "I am thinking of a word that is "
+        + str(len(secretWord))
+        + " letters long."
+        + "\n"
+        + "-------------"
+    )
 
     # Create an empty list that will store the letters that the user has
     # already input as a guess
@@ -154,49 +163,70 @@ def hangman(secretWord):
             print("Thanks for playing!" + "\n" + "-------------")
             secretWord = chooseWord(wordlist)
             guesses_left = 8
-            print("Welcome to the game Hangman!" + "\n" +
-                  "I am thinking of a word that is " +
-                  str(len(secretWord)) + " letters long." +
-                  "\n" + "-------------")
+            print(
+                "Welcome to the game Hangman!"
+                + "\n"
+                + "I am thinking of a word that is "
+                + str(len(secretWord))
+                + " letters long."
+                + "\n"
+                + "-------------"
+            )
             lettersGuessed.clear()
             continue
         # If the user guessed the word correctly, end the game
         if isWordGuessed(secretWord, lettersGuessed) is True:
             print("Congratulations, you won!")
             return
-        print("You have " + str(guesses_left) +
-              " guesses left." + "\n" +
-              "Available letters: " +
-              getAvailableLetters(lettersGuessed))
+        print(
+            "You have "
+            + str(guesses_left)
+            + " guesses left."
+            + "\n"
+            + "Available letters: "
+            + getAvailableLetters(lettersGuessed)
+        )
         user_guess = input("Please guess a letter: ")
         user_guess_lowercase = str(user_guess.lower())
         # Error handling: triggers a message if the user doesn't input a
         # lowercase or uppercase letter included in ascii_lowercase
-        while (len(user_guess_lowercase) != 1) or \
-                (user_guess_lowercase not in ascii_lowercase):
-            user_guess = input("The character you input is not a letter." +
-                               "Please guess a letter: ")
+        while (len(user_guess_lowercase) != 1) or (
+            user_guess_lowercase not in ascii_lowercase
+        ):
+            user_guess = input(
+                "The character you input is not a letter."
+                + "Please guess a letter: "
+            )
             user_guess_lowercase = str(user_guess.lower())
         # Error handling: triggers a message if the user enters an input that
         # he already entered before
         if user_guess_lowercase in lettersGuessed:
-            print("Oops! You've already guessed that letter: " +
-                  getGuessedWord(secretWord, lettersGuessed) +
-                  "\n" + "-------------")
+            print(
+                "Oops! You've already guessed that letter: "
+                + getGuessedWord(secretWord, lettersGuessed)
+                + "\n"
+                + "-------------"
+            )
             continue
         # Add the valid guess to the lettersGuessed list
         lettersGuessed.append(user_guess_lowercase)
         # Check if the guess is correct
         if user_guess_lowercase in secretWord:
-            print("Good guess: " +
-                  getGuessedWord(secretWord, lettersGuessed) +
-                  "\n" + "-------------")
+            print(
+                "Good guess: "
+                + getGuessedWord(secretWord, lettersGuessed)
+                + "\n"
+                + "-------------"
+            )
         else:
             # Reduce the remaining guesses by 1, since the guess was wrong
             guesses_left -= 1
-            print("Oops! That letter is not in my word: " +
-                  getGuessedWord(secretWord, lettersGuessed) +
-                  "\n" + "-------------")
+            print(
+                "Oops! That letter is not in my word: "
+                + getGuessedWord(secretWord, lettersGuessed)
+                + "\n"
+                + "-------------"
+            )
 
 
 hangman(secretWord)
